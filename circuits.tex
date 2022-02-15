@@ -55,7 +55,7 @@
 
 \section{Circuit 7 segments}
 \begin{itemize}
-    \item [\ding{78}] Ecrire le table de vérité du sous-circuit \texttt{Bit1}
+    \item [\ding{78}] Ecrire la table de vérité du sous-circuit \texttt{Bit1}
 \end{itemize}
 
 Le \texttt{Bit1} doit être allumé pour les chiffres (en décimal) qui appartient à l'ensemble $\{0, 1, 3, 4, 5, 6, 7, 8, 9\}$. Sa table de
@@ -127,7 +127,7 @@ pour les chiffres $\{0, 4, 5, 6, 8, 9\}$.
     \begin{table}[h!]
         \hspace{1cm}
         \begin{tabular}{lll|l|l|l}
-        $a$ & $b$ & $c$ & $O[0]$ & V & cout \\
+        $A[0]$ & $B[0]$ & $Cin$ & $O[0]$ & V & cout \\
         \hline
         0 & 0 & 0 & 0        & 0 & 0    \\
         0 & 0 & 1 & 1        & 0 & 0    \\
@@ -158,8 +158,8 @@ d'une XOR.
     \end{tabular}
     \end{table}
 
-    Si on concentre sur le moitié en bas où $a$ est vrai, on remarque que la value de $c$ est tout simplement $\bar b$. Alors on donne a manger
-    tout les 32 bits dans 32 portes XOR pour avoir le complément à 1 du nombre et ensuite on donne en entré ce nombre plus 1 pour faire une addition, où le `plus 1'
-    remplit le vide du bit de retenue en entré du 32-bit adder. Le circuit est bouclé, on a con\c cu une ALU.
+    Si on se concentre sur la moitié en bas où $a$ est vrai, on remarque que la value de $c$ est tout simplement $\bar b$. Alors on donne "à manger"
+    tous les 32 bits dans 32 portes XOR pour avoir le complément à 1 du nombre et ensuite on donne en entrée ce nombre plus 1 pour faire une addition, où le `plus 1'
+    remplit le vide du bit de retenue en entrée du 32-bit adder. Le circuit est bouclé, on a con\c cu une ALU.
 
 \end{document}
