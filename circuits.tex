@@ -1,0 +1,165 @@
+
+% This is a simple template for a LaTeX document using the "article" class.
+% See "book", "report", "letter" for other types of document.
+
+\documentclass[10pt]{article} % use larger type; default would be 10pt
+
+\input{preamble.tex}
+
+\begin{document}
+
+% Template to make the document pretty
+\input{arch_template.tex}
+
+% \section*{\aslprp{Enseignements première année (L3)}}
+% \input{premiere_annee.tex}
+% \section*{\aslprp{Enseignements deuxième année (L4)}}
+% \input{deuxieme_annee.tex}
+
+\vspace{0.7cm}
+{\noindent \Large \bf Objectifs}
+\begin{itemize}
+    \item [\ding{78}] Se familiariser avec logisim
+    \item [\ding{78}] Modéliser une formule logique
+    \item [\ding{78}] Simuler un circuit logique
+\end{itemize}
+% \noindent\rule{\textwidth}{1pt}
+
+
+\section{Combinatorial Circuit}
+
+% \hspace{1cm}
+\begin{table}[h!]
+    \hspace{2cm}
+    \begin{minipage}{0.5\linewidth}
+        \begin{tabular}{l | l |l | c |l}
+            $a$ & $b$ & $c$ & ($b \cdot \bar c$) & s \\
+            \hline
+            0 & 0 & 0 & 0                                              & 0 \\
+            0 & 0 & 1 & 0                                              & 0 \\
+            0 & 1 & 0 & 1                                              & 1 \\
+            0 & 1 & 1 & 0                                              & 0 \\
+            1 & 0 & 0 & 0                                              & 1 \\
+            1 & 0 & 1 & 0                                              & 1 \\
+            1 & 1 & 0 & 1                                              & 1 \\
+            1 & 1 & 1 & 0                                              & 1
+        \end{tabular}
+    \end{minipage}
+
+    % \begin{minipage}{0.5\linewidth}
+        % \includegraphics{}
+    % \end{minipage}
+
+
+\end{table}
+
+\section{Circuit 7 segments}
+\begin{itemize}
+    \item [\ding{78}] Ecrire le table de vérité du sous-circuit \texttt{Bit1}
+\end{itemize}
+
+Le \texttt{Bit1} doit être allumé pour les chiffres (en décimal) qui appartient à l'ensemble $\{0, 1, 3, 4, 5, 6, 7, 8, 9\}$. Sa table de
+vérité est donc:
+
+\begin{table}[h!]
+    \hspace{2cm}
+    \begin{tabular}{l|llll |l}
+    Chiffre & $a$ & $b$ & $c$ & $d$ & $s$ \\
+    \hline
+    0       & 0 & 0 & 0 & 0 & 1 \\
+    1       & 0 & 0 & 0 & 1 & 1 \\
+    2       & 0 & 0 & 1 & 0 & 0 \\
+    3       & 0 & 0 & 1 & 1 & 1 \\
+    4       & 0 & 1 & 0 & 0 & 1 \\
+    5       & 0 & 1 & 0 & 1 & 1 \\
+    6       & 0 & 1 & 1 & 0 & 1 \\
+    7       & 0 & 1 & 1 & 1 & 1 \\
+    8       & 1 & 0 & 0 & 0 & 1 \\
+    9       & 1 & 0 & 0 & 1 & 1 \\
+    E       & 1 & x & x & x & 0
+    \end{tabular}
+    \end{table}
+
+% \newpage
+
+Pour construire le sous-circuit \texttt{Bit4}, on procède d'une manière analogue du \texttt{Bit4}. On doit tout d'abord établir
+pour quel chiffres doit-on allumer la position $b4$ dans le circuit 7 segments. Une analyse nous révèle que \texttt{Bit4} doit être allumé
+pour les chiffres $\{0, 4, 5, 6, 8, 9\}$.
+
+\newpage
+
+\begin{table}[h!]
+    \hspace{2cm}
+    \begin{tabular}{l|llll|l}
+    Chiffre & $a$ & $b$ & $c$ & $d$ & $s$ \\
+    \hline
+    0       & 0 & 0 & 0 & 0 & 1 \\
+    1       & 0 & 0 & 0 & 1 & 0 \\
+    2       & 0 & 0 & 1 & 0 & 0 \\
+    3       & 0 & 0 & 1 & 1 & 0 \\
+    4       & 0 & 1 & 0 & 0 & 1 \\
+    5       & 0 & 1 & 0 & 1 & 1 \\
+    6       & 0 & 1 & 1 & 0 & 1 \\
+    7       & 0 & 1 & 1 & 1 & 0 \\
+    8       & 1 & 0 & 0 & 0 & 1 \\
+    9       & 1 & 0 & 0 & 1 & 1 \\
+    E       & 1 & x & x & x & 1
+    \end{tabular}
+    \end{table}
+
+    A partir de cette table de vérité on a pu générer automatiquement le circuit suivant
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.4\textwidth]{media/bit4.png}
+        \caption{Circuit de \texttt{Bit4}. Il est encodé par la fonction booléenne $s = a + b\bar d + b\bar c + \bar c \bar d$}
+    \end{figure}
+
+    Le bug qu'on a trouvé c'est que \texttt{Bit6} est allumé incorrectement quand on veut visualiser le chiffre 7. Alors pour résoudre le problème
+    on modifie la table de vérité de \texttt{Bit6} pour que $\texttt{Bit6}(0,1,1,1) = 0$. Enfin on génère le circuit selon la table modifié et on
+    trouve que le bug est résolu.
+
+\section{Conception d'une unité arithmétique et logique (ALU)}
+
+    L'opération d'addition en binaire est presque pareil de celui en décimal, pourtant en binaire on a que $2$ chiffres, $\{0, 1\}$, pour représenter les nombres.
+    De même, il s'agit d'additioner deux nombres chiffres par chiffres, en gardant un chiffre de retenue quand on dépasse le maximum chiffre qu'on a dans notre base.
+
+    \begin{table}[h!]
+        \hspace{1cm}
+        \begin{tabular}{lll|l|l|l}
+        $a$ & $b$ & $c$ & $O[0]$ & V & cout \\
+        \hline
+        0 & 0 & 0 & 0        & 0 & 0    \\
+        0 & 0 & 1 & 1        & 0 & 0    \\
+        0 & 1 & 0 & 1        & 0 & 0    \\
+        0 & 1 & 1 & 0        & 1 & 1    \\
+        1 & 0 & 0 & 1        & 0 & 0    \\
+        1 & 0 & 1 & 0        & 1 & 1    \\
+        1 & 1 & 0 & 0        & 1 & 1    \\
+        1 & 1 & 1 & 1        & 1 & 1
+        \end{tabular}
+        \end{table}
+
+% \pagestyle{fancy}
+Pour transformer un nombre en sa version négative selon l'encodage de complément à 2, on prend le complément à 1 - c'est-à-dire l'inversion de tous les bits d'un nombre - et
+après on ajoute 1 à ce nombre inversé. Si on dédie un bit d'entré pour choisir l'opération à executer (1 pour la soustraction, 0 pour l'addition), on peut utiliser une porte
+XOR avec le bit d'opération et chaque bit de notre entier de 32bits pour inverser les bits quand le bit d'opération est allumé. Pour visualiser cela on écrit la table de vérité
+d'une XOR.
+
+\begin{table}[h!]
+    \hspace{1cm}
+    \begin{tabular}{ll|l}
+    $a$ & $b$ & $c$ \\
+    \hline
+    0 & 0 & 0 \\
+    0 & 1 & 1 \\
+    1 & 0 & 1 \\
+    1 & 1 & 0
+    \end{tabular}
+    \end{table}
+
+    Si on concentre sur le moitié en bas où $a$ est vrai, on remarque que la value de $c$ est tout simplement $\bar b$. Alors on donne a manger
+    tout les 32 bits dans 32 portes XOR pour avoir le complément à 1 du nombre et ensuite on donne en entré ce nombre plus 1 pour faire une addition, où le `plus 1'
+    remplit le vide du bit de retenue en entré du 32-bit adder. Le circuit est bouclé, on a con\c cu une ALU.
+
+\end{document}
